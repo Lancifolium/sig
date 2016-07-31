@@ -1,25 +1,3 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- * This is GNU Go, a Go program. Contact gnugo@gnu.org, or see       *
- * http://www.gnu.org/software/gnugo/ for more information.          *
- *                                                                   *
- * Copyright 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,   *
- * 2008, 2009, 2010 and 2011 by the Free Software Foundation.        *
- *                                                                   *
- * This program is free software; you can redistribute it and/or     *
- * modify it under the terms of the GNU General Public License as    *
- * published by the Free Software Foundation - version 3 or          *
- * (at your option) any later version.                               *
- *                                                                   *
- * This program is distributed in the hope that it will be useful,   *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of    *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     *
- * GNU General Public License in file COPYING for more details.      *
- *                                                                   *
- * You should have received a copy of the GNU General Public         *
- * License along with this program; if not, write to the Free        *
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor,       *
- * Boston, MA 02111, USA.                                            *
-\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /*  Parts of this code were given to us by Tommy Thorn */
 
@@ -273,7 +251,7 @@ sgfOverwriteProperty(SGFNode *node, const char *name, const char *text)
 
 
 /*
- * Overwrite an int property in an SGF node with val or create a new 
+ * Overwrite an int property in an SGF node with val or create a new
  * one if it does not exist.
  */
 
@@ -294,7 +272,7 @@ sgfOverwritePropertyInt(SGFNode *node, const char *name, int val)
 }
 
 
-/* 
+/*
  * Overwrite a float property in the gametree with val or create
  * a new one if it does not exist.
  */
@@ -488,7 +466,7 @@ sgfAddPlay(SGFNode *node, int who, int movex, int movey)
 {
   char move[3];
   SGFNode *new;
-  
+
   /* a pass move? */
   if (movex == -1 && movey == -1)
     move[0] = 0;
@@ -502,7 +480,7 @@ sgfAddPlay(SGFNode *node, int who, int movex, int movey)
     node->child = new;
     new->parent = node;
   }
-  
+
   sgfAddProperty(new, (who == BLACK) ? "B" : "W", move);
 
   return new;
@@ -753,7 +731,7 @@ sgfAddChild(SGFNode *node)
   assert(node);
 
   new_node->parent = node;
-  
+
   if (!node->child)
     node->child = new_node;
   else {
@@ -836,7 +814,7 @@ sgf_write_header(SGFNode *root, int overwrite, int seed, float komi,
   char str[128];
   int dummy;
 
-  gg_snprintf(str, 128, "GNU Go %s Random Seed %d level %d", 
+  gg_snprintf(str, 128, "GNU Go %s Random Seed %d level %d",
 	      VERSION, seed, level);
   if (overwrite || !sgfGetIntProperty(root, "GN", &dummy))
     sgfOverwriteProperty(root, "GN", str);
@@ -875,10 +853,10 @@ sgf_write_header(SGFNode *root, int overwrite, int seed, float komi,
  *   1) There is never a need for backtracking
  *   2) The only recursion is on gametree.
  *   3) Tokens are only one character
- * 
+ *
  * We will use a global state to keep track of the remaining input
- * and a global char variable, `lookahead' to hold the next token.  
- * The function `nexttoken' skips whitespace and fills lookahead with 
+ * and a global char variable, `lookahead' to hold the next token.
+ * The function `nexttoken' skips whitespace and fills lookahead with
  * the new token.
  */
 
@@ -943,9 +921,9 @@ match(int expected)
 static void
 propident(char *buffer, int size)
 {
-  if (lookahead == EOF || !isupper(lookahead)) 
+  if (lookahead == EOF || !isupper(lookahead))
     parse_error("Expected an upper case letter.", 0);
-  
+
   while (lookahead != EOF && isalpha(lookahead)) {
     if (isupper(lookahead) && size > 1) {
       *buffer++ = lookahead;
@@ -969,12 +947,12 @@ propvalue(char *buffer, int size)
       /* Follow the FF4 definition of backslash */
       if (lookahead == '\r') {
 	lookahead = sgf_getch();
-	if (lookahead == '\n') 
+	if (lookahead == '\n')
 	  lookahead = sgf_getch();
       }
       else if (lookahead == '\n') {
 	lookahead = sgf_getch();
-	if (lookahead == '\r') 
+	if (lookahead == '\r')
 	  lookahead = sgf_getch();
       }
     }
@@ -985,7 +963,7 @@ propvalue(char *buffer, int size)
     lookahead = sgf_getch();
   }
   match(']');
-  
+
   /* Remove trailing whitespace. The double cast below is needed
    * because "char" may be represented as a signed char, in which case
    * characters between 128 and 255 would be negative and a direct
@@ -1040,7 +1018,7 @@ sequence(SGFNode *n)
 
 
 static void
-gametree(SGFNode **p, SGFNode *parent, int mode) 
+gametree(SGFNode **p, SGFNode *parent, int mode)
 {
   if (mode == STRICT_SGF)
     match('(');
@@ -1085,7 +1063,7 @@ gametree(SGFNode **p, SGFNode *parent, int mode)
  */
 
 static void
-gametreefuseki(SGFNode **p, SGFNode *parent, int mode, 
+gametreefuseki(SGFNode **p, SGFNode *parent, int mode,
 	       int moves_per_game, int i)
 {
   if (mode == STRICT_SGF)
@@ -1104,7 +1082,7 @@ gametreefuseki(SGFNode **p, SGFNode *parent, int mode,
       }
       nexttoken();
     }
-  
+
   /* The head is parsed */
   {
 
@@ -1112,15 +1090,15 @@ gametreefuseki(SGFNode **p, SGFNode *parent, int mode,
     SGFNode *last;
     head->parent = parent;
     *p = head;
-    
+
     last = sequence(head);
     p = &last->child;
     while (lookahead == '(') {
-      if (last->props 
+      if (last->props
 	  && (last->props->name == SGFB || last->props->name == SGFW))
 	i++;
       /* break after number_of_moves moves in SGF file */
-      if (i >= moves_per_game) { 
+      if (i >= moves_per_game) {
 	last->child = NULL;
 	last->next = NULL;
 	break;
@@ -1324,7 +1302,7 @@ sgf_print_property(FILE *file, SGFNode *node, short name, int is_comment)
 	sgf_putc(']', file);
 	sgf_putc('[', file);
       }
-      
+
       sgf_puts(prop->value, file);
       n++;
     }
@@ -1354,14 +1332,14 @@ sgfPrintRemainingProperties(FILE *file, SGFNode *node)
 
 
 /*
- * Print the property values of NAME at node N and mark it as printed. 
+ * Print the property values of NAME at node N and mark it as printed.
  */
 
 static void
 sgfPrintCharProperty(FILE *file, SGFNode *node, const char *name)
 {
   short nam = name[0] | name[1] << 8;
-  
+
   sgf_print_property(file, node, nam, 0);
 }
 
@@ -1377,7 +1355,7 @@ static void
 sgfPrintCommentProperty(FILE *file, SGFNode *node, const char *name)
 {
   short nam = name[0] | name[1] << 8;
-  
+
   sgf_print_property(file, node, nam, 1);
 }
 
@@ -1398,34 +1376,34 @@ static void
 unparse_root(FILE *file, SGFNode *node)
 {
   sgf_putc(';', file);
-  
+
   if (sgfHasProperty(node, "GM"))
     sgfPrintCharProperty(file, node, "GM");
   else {
     fputs("GM[1]", file);
     sgf_column += 5;
   }
-  
+
   sgfPrintCharProperty(file, node, "FF");
   sgf_putc('\n', file);
 
   sgfPrintCharProperty(file, node, "SZ");
   sgf_putc('\n', file);
-  
+
   sgfPrintCharProperty(file, node, "GN");
   sgf_putc('\n', file);
-  
+
   sgfPrintCharProperty(file, node, "DT");
   sgf_putc('\n', file);
-  
+
   sgfPrintCommentProperty(file, node, "PB");
   sgfPrintCommentProperty(file, node, "BR");
   sgf_putc('\n', file);
-  
+
   sgfPrintCommentProperty(file, node, "PW");
   sgfPrintCommentProperty(file, node, "WR");
   sgf_putc('\n', file);
-  
+
   sgfPrintCommentProperty(file, node, "N ");
   sgfPrintCommentProperty(file, node, "C ");
   sgfPrintRemainingProperties(file, node);
@@ -1454,7 +1432,7 @@ unparse_game(FILE *file, SGFNode *node, int root)
   while (node != NULL && node->next == NULL) {
     unparse_node(file, node);
     node = node->child;
-  } 
+  }
 
   while (node != NULL) {
     unparse_game(file, node, 0);
@@ -1502,7 +1480,7 @@ writesgf(SGFNode *root, const char *filename)
 {
   FILE *outfile;
 
-  if (strcmp(filename, "-") == 0) 
+  if (strcmp(filename, "-") == 0)
     outfile = stdout;
   else
     outfile = fopen(filename, "w");
@@ -1518,12 +1496,12 @@ writesgf(SGFNode *root, const char *filename)
   unparse_game(outfile, root, 1);
   if (outfile != stdout)
     fclose(outfile);
-  
+
   /* Remove "printed" marks so that the tree can be written multiple
    * times.
    */
   restore_node(root);
-  
+
   return 1;
 }
 
