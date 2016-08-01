@@ -16,20 +16,19 @@ static short str2short(char *str);
  */
 
 static short
-str2short(char *str)
-{
+str2short(char *str) {
   return (str[0] | str[1] << 8);
 }
 
 int
-main(void)
-{
+main(void) {
   char instring[MAX_LINE];
   char sgf_tag[MAX_LINE];
   char comment[MAX_LINE];
   int i;
 
   while (fgets(instring, MAX_LINE, stdin)) {
+        fprintf(stdout, "------------ %s\n", instring); ///////////////
     i = strlen(instring) - 1;
 
     /* Remove trailing newline and spaces */
@@ -45,6 +44,7 @@ main(void)
 
     sscanf(instring, "%4s %75s", sgf_tag, comment);
     strncpy(sgf_tag, instring, 4);
+    fprintf(stdout, "### %s ### %s \n", sgf_tag, comment); ///////////////
     if (strlen(instring) > 4)
       strncpy(comment, instring+4, MAX_LINE-4);
     else
@@ -65,8 +65,7 @@ main(void)
     }
     else {
       /* otherwise, write the tag and value to the file */
-      if (strlen(comment))
-	fprintf(stdout, "     /* %s */\n", comment);
+	  if (strlen(comment)) fprintf(stdout, "     /* %s */\n", comment);
       fprintf(stdout, "#define SGF%s %5d\n", sgf_tag, str2short(sgf_tag));
     }
   }

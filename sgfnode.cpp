@@ -24,13 +24,44 @@
 #endif
 
 #include "sgftree.h"
-#include "gg_utils.h"
+//#include "gg_utils.h"
 
 #define STRICT_SGF 's'
 #define LAX_SGF    'l'
 
 /* Set this to 1 if you want warnings for missing GM and FF properties. */
 #define VERBOSE_WARNINGS 0
+
+void gg_vsnprintf(char *dest, unsigned long len, const char *fmt,
+		  va_list args);
+void gg_snprintf(char *dest, unsigned long len, const char *fmt, ...);
+
+void
+gg_vsnprintf(char *dest, unsigned long len, const char *fmt, va_list args)
+{
+
+#ifdef HAVE_VSNPRINTF
+  vsnprintf(dest, len, fmt, args);
+#elif HAVE_G_VSNPRINTF
+  g_vsnprintf(dest, len, fmt, args);
+#elif HAVE__VSNPRINTF
+  _vsnprintf(dest, len, fmt, args);
+#else
+  //UNUSED(len);
+  (void)len;
+  vsprintf(dest, fmt, args);
+#endif
+
+}
+
+void
+gg_snprintf(char *dest, unsigned long len, const char *fmt, ...)
+{
+  va_list args;
+  va_start(args, fmt);
+  gg_vsnprintf(dest, len, fmt, args);
+  va_end(args);
+}
 
 /* ================================================================ */
 /*                     Some utility functions.                      */
@@ -41,8 +72,7 @@
  */
 
 void *
-xalloc(unsigned int size)
-{
+xalloc(unsigned int size) {
   void *pt = malloc(size);
 
   if (!pt) {
@@ -55,8 +85,7 @@ xalloc(unsigned int size)
 }
 
 void *
-xrealloc(void *pt, unsigned int size)
-{
+xrealloc(void *pt, unsigned int size) {
   void *ptnew = realloc(pt, size);
 
   if (!ptnew) {
@@ -77,10 +106,9 @@ xrealloc(void *pt, unsigned int size)
  */
 
 SGFNode *
-sgfNewNode()
-{
+sgfNewNode() {
   SGFNode *newnode;
-  newnode = xalloc(sizeof(SGFNode));
+  newnode = (SGFNode *)xalloc(sizeof(SGFNode));
   newnode->next = NULL;
   newnode->props = NULL;
   newnode->parent = NULL;
@@ -93,8 +121,7 @@ sgfNewNode()
  */
 
 void
-sgfFreeNode(SGFNode *node)
-{
+sgfFreeNode(SGFNode *node) {
   if (node == NULL)
     return;
   sgfFreeNode(node->next);
@@ -109,8 +136,7 @@ sgfFreeNode(SGFNode *node)
  */
 
 void
-sgfAddProperty(SGFNode *node, const char *name, const char *value)
-{
+sgfAddProperty(SGFNode *node, const char *name, const char *value) {
   SGFProperty *prop = node->props;
 
   if (prop)
@@ -154,8 +180,7 @@ sgfAddPropertyFloat(SGFNode *node, const char *name, float val)
  */
 
 int
-sgfGetIntProperty(SGFNode *node, const char *name, int *value)
-{
+sgfGetIntProperty(SGFNode *node, const char *name, int *value) {
   SGFProperty *prop;
   short nam = name[0] | name[1] << 8;
 
@@ -241,7 +266,7 @@ sgfOverwriteProperty(SGFNode *node, const char *name, const char *text)
 
   for (prop = node->props; prop; prop = prop->next)
     if (prop->name == nam) {
-      prop->value = xrealloc(prop->value, strlen(text)+1);
+      prop->value = (char *)xrealloc(prop->value, strlen(text)+1);
       strcpy(prop->value, text);
       return;
     }
@@ -263,7 +288,7 @@ sgfOverwritePropertyInt(SGFNode *node, const char *name, int val)
 
   for (prop = node->props; prop; prop = prop->next)
     if (prop->name == nam) {
-      prop->value = xrealloc(prop->value, 12);
+      prop->value = (char *)xrealloc(prop->value, 12);
       gg_snprintf(prop->value, 12, "%d", val);
       return;
    }
@@ -285,7 +310,7 @@ sgfOverwritePropertyFloat(SGFNode *node, const char *name, float val)
 
   for (prop = node->props; prop; prop = prop->next)
     if (prop->name == nam) {
-      prop->value = xrealloc(prop->value, 15);
+      prop->value = (char *)xrealloc(prop->value, 15);
       gg_snprintf(prop->value, 15, "%3.1f", val);
       return;
     }
@@ -348,7 +373,7 @@ do_sgf_make_property(short sgf_name,  const char *value,
 
   prop = (SGFProperty *) xalloc(sizeof(SGFProperty));
   prop->name = sgf_name;
-  prop->value = xalloc(strlen(value) + 1);
+  prop->value = (char *)xalloc(strlen(value) + 1);
   strcpy(prop->value, value);
   prop->next = NULL;
 
@@ -366,8 +391,7 @@ do_sgf_make_property(short sgf_name,  const char *value,
  */
 SGFProperty *
 sgfMkProperty(const char *name, const  char *value,
-	      SGFNode *node, SGFProperty *last)
-{
+		  SGFNode *node, SGFProperty *last) {
   static const short properties_allowing_ranges[12] = {
     /* Board setup properties. */
     SGFAB, SGFAW, SGFAE,
@@ -406,8 +430,8 @@ sgfMkProperty(const char *name, const  char *value,
 
     if (x1 <= x2 && y1 <= y2) {
       for (new_value[0] = x1; new_value[0] <= x2; new_value[0]++) {
-	for (new_value[1] = y1; new_value[1] <= y2; new_value[1]++)
-	  last = do_sgf_make_property(sgf_name, new_value, node, last);
+		for (new_value[1] = y1; new_value[1] <= y2; new_value[1]++)
+		  last = do_sgf_make_property(sgf_name, new_value, node, last);
       }
 
       return last;
@@ -465,7 +489,7 @@ SGFNode *
 sgfAddPlay(SGFNode *node, int who, int movex, int movey)
 {
   char move[3];
-  SGFNode *new;
+  SGFNode *newnode;
 
   /* a pass move? */
   if (movex == -1 && movey == -1)
@@ -474,16 +498,16 @@ sgfAddPlay(SGFNode *node, int who, int movex, int movey)
     sprintf(move, "%c%c", movey + 'a', movex + 'a');
 
   if (node->child)
-    new = sgfStartVariantFirst(node->child);
+    newnode = sgfStartVariantFirst(node->child);
   else {
-    new = sgfNewNode();
-    node->child = new;
-    new->parent = node;
+    newnode = sgfNewNode();
+    node->child = newnode;
+    newnode->parent = node;
   }
 
-  sgfAddProperty(new, (who == BLACK) ? "B" : "W", move);
+  sgfAddProperty(newnode, (who == BLACK) ? "B" : "W", move);
 
-  return new;
+  return newnode;
 }
 
 
@@ -496,7 +520,7 @@ SGFNode *
 sgfAddPlayLast(SGFNode *node, int who, int movex, int movey)
 {
   char move[3];
-  SGFNode *new;
+  SGFNode *newnode;
 
   /* a pass move? */
   if (movex == -1 && movey == -1)
@@ -504,10 +528,10 @@ sgfAddPlayLast(SGFNode *node, int who, int movex, int movey)
   else
     sprintf(move, "%c%c", movey + 'a', movex + 'a');
 
-  new = sgfAddChild(node);
-  sgfAddProperty(new, (who == BLACK) ? "B" : "W", move);
+  newnode = sgfAddChild(node);
+  sgfAddProperty(newnode, (who == BLACK) ? "B" : "W", move);
 
-  return new;
+  return newnode;
 }
 
 
@@ -546,8 +570,8 @@ sgfBoardText(SGFNode *node, int i, int j, const char *text)
 {
   void *str = xalloc(strlen(text) + 3);
 
-  sprintf(str, "%c%c:%s", j+'a', i+'a', text);
-  sgfAddProperty(node, "LB", str);
+  sprintf((char *)str, "%c%c:%s", j+'a', i+'a', text);
+  sgfAddProperty((SGFNode *)node, "LB", (char *)str);
   free(str);
 
   return node;
@@ -802,7 +826,7 @@ sgf_write_header_reduced(SGFNode *root, int overwrite)
   if (overwrite || !sgfGetIntProperty(root, "DT", &dummy))
     sgfOverwriteProperty(root, "DT", str);
   if (overwrite || !sgfGetIntProperty(root, "AP", &dummy))
-    sgfOverwriteProperty(root, "AP", "GNU Go:"VERSION);
+    sgfOverwriteProperty(root, "AP", "GNU Go: 3.9");
   sgfOverwriteProperty(root, "FF", "4");
 }
 
@@ -814,8 +838,8 @@ sgf_write_header(SGFNode *root, int overwrite, int seed, float komi,
   char str[128];
   int dummy;
 
-  gg_snprintf(str, 128, "GNU Go %s Random Seed %d level %d",
-	      VERSION, seed, level);
+  gg_snprintf(str, 128, "GNU Go 3.9 Random Seed %d level %d",
+	      seed, level);
   if (overwrite || !sgfGetIntProperty(root, "GN", &dummy))
     sgfOverwriteProperty(root, "GN", str);
   if (overwrite || !sgfGetIntProperty(root, "RU", &dummy))
@@ -1007,10 +1031,10 @@ sequence(SGFNode *n)
 {
   node(n);
   while (lookahead == ';') {
-    SGFNode *new = sgfNewNode();
-    new->parent = n;
-    n->child = new;
-    n = new;
+    SGFNode *newnode = sgfNewNode();
+    newnode->parent = n;
+    n->child = newnode;
+    n = newnode;
     node(n);
   }
   return n;
@@ -1170,8 +1194,7 @@ readsgffilefuseki(const char *filename, int moves_per_game)
  */
 
 SGFNode *
-readsgffile(const char *filename)
-{
+readsgffile(const char *filename) {
   SGFNode *root;
   int tmpi = 0;
 

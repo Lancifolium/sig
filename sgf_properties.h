@@ -9,8 +9,12 @@
 /* # This is an alphabetical index to all properties defined in FF[4]. */
 /* # New properties are marked with '*', changed properties are marked with '!'. */
 /* # */
+
+/* How to generate description: int desc = src[0] | src[1] << 8; */
+
 /* #ID   Description     property type    property value */
 /* #---- --------------- ---------------  -------------------------------------- */
+
      /*  Add Black       setup            list of stone */
 #define SGFAB   16961
      /*  Add Empty       setup            list of point */

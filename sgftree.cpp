@@ -1,18 +1,16 @@
 #include <assert.h>
 
-#include "gg_utils.h"
+//#include "gg_utils.h"
 #include "sgftree.h"
 
 void
-sgftree_clear(SGFTree *tree)
-{
+sgftree_clear(SGFTree *tree) {
   tree->root = NULL;
   tree->lastnode = NULL;
 }
 
 int
-sgftree_readfile(SGFTree *tree, const char *infilename)
-{
+sgftree_readfile(SGFTree *tree, const char *infilename) {
   SGFNode *savetree = tree->root;
 
   tree->root = readsgffile(infilename);
@@ -32,8 +30,7 @@ sgftree_readfile(SGFTree *tree, const char *infilename)
  */
 
 int
-sgftreeBack(SGFTree *tree)
-{
+sgftreeBack(SGFTree *tree) {
   if (tree->lastnode) {
     if (tree->lastnode->parent)
       tree->lastnode = tree->lastnode->parent;
@@ -53,8 +50,7 @@ sgftreeBack(SGFTree *tree)
  */
 
 int
-sgftreeForward(SGFTree *tree)
-{
+sgftreeForward(SGFTree *tree) {
   if (tree->lastnode) {
     if (tree->lastnode->child)
       tree->lastnode = tree->lastnode->child;
@@ -208,8 +204,7 @@ sgftreeBoardNumber(SGFTree *tree, int i, int j, int number)
  */
 
 void
-sgftreeTriangle(SGFTree *tree, int i, int j)
-{
+sgftreeTriangle(SGFTree *tree, int i, int j) {
   SGFNode *node = sgftreeNodeCheck(tree);
   sgfTriangle(node, i, j);
 }
@@ -220,8 +215,7 @@ sgftreeTriangle(SGFTree *tree, int i, int j)
  */
 
 void
-sgftreeCircle(SGFTree *tree, int i, int j)
-{
+sgftreeCircle(SGFTree *tree, int i, int j) {
   SGFNode *node = sgftreeNodeCheck(tree);
   sgfCircle(node, i, j);
 }
@@ -232,8 +226,7 @@ sgftreeCircle(SGFTree *tree, int i, int j)
  */
 
 void
-sgftreeSquare(SGFTree *tree, int i, int j)
-{
+sgftreeSquare(SGFTree *tree, int i, int j) {
   SGFNode *node = sgftreeNodeCheck(tree);
   sgfSquare(node, i, j);
 }
@@ -244,8 +237,7 @@ sgftreeSquare(SGFTree *tree, int i, int j)
  */
 
 void
-sgftreeMark(SGFTree *tree, int i, int j)
-{
+sgftreeMark(SGFTree *tree, int i, int j) {
   SGFNode *node = sgftreeNodeCheck(tree);
   sgfMark(node, i, j);
 }
@@ -256,8 +248,7 @@ sgftreeMark(SGFTree *tree, int i, int j)
  */
 
 void
-sgftreeStartVariant(SGFTree *tree)
-{
+sgftreeStartVariant(SGFTree *tree) {
   SGFNode *node = sgftreeNodeCheck(tree);
   tree->lastnode = sgfStartVariant(node);
 }
@@ -268,8 +259,7 @@ sgftreeStartVariant(SGFTree *tree)
  */
 
 void
-sgftreeStartVariantFirst(SGFTree *tree)
-{
+sgftreeStartVariantFirst(SGFTree *tree) {
   SGFNode *node = sgftreeNodeCheck(tree);
   tree->lastnode = sgfStartVariantFirst(node);
 }
@@ -280,8 +270,7 @@ sgftreeStartVariantFirst(SGFTree *tree)
  */
 
 void
-sgftreeWriteResult(SGFTree *tree, float score, int overwrite)
-{
+sgftreeWriteResult(SGFTree *tree, float score, int overwrite) {
   assert(tree->root);
 
   sgfWriteResult(tree->root, score, overwrite);
@@ -289,8 +278,7 @@ sgftreeWriteResult(SGFTree *tree, float score, int overwrite)
 
 
 void
-sgftreeSetLastNode(SGFTree *tree, SGFNode *last_node)
-{
+sgftreeSetLastNode(SGFTree *tree, SGFNode *last_node) {
   tree->lastnode = last_node;
 }
 

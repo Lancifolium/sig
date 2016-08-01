@@ -2,24 +2,13 @@
 #define _SGFTREE_H_
 
 #include <stdio.h>
+#include <stdarg.h> // for va_list
 
 #include "sgf_properties.h"
-
-
-#ifndef _BOARD_H_
-/*
- * NOTE: These MUST coincide with the definitions for the engine that we
- *       are using. In this case they are defined in engine/gnugo.h.
- *
- * The reason that we put them here within the #ifndef clause is because
- * we want to decouple the GNU Go engine from SGF library, but we don't
- * want to redefine these symbols if we include this file into board.h.
- */
 
 #define EMPTY 0
 #define WHITE 1
 #define BLACK 2
-#endif
 
 
 void *xalloc(unsigned int);
@@ -150,6 +139,11 @@ int is_markup_node(SGFNode *node);
 int is_move_node(SGFNode *node);
 int is_pass_node(SGFNode *node, int boardsize);
 int find_move(SGFNode *node);
+
+/* ---------------------------------------------------------------- */
+/* ---                         SGFMerge                         --- */
+/* ---------------------------------------------------------------- */
+
 
 
 #endif
