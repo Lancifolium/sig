@@ -7,19 +7,19 @@
 	<ctype.h>
 	"sgftree.h"
 
-1470018726 c:\users\fierralin\code\sigreader\sgftree.h
+1470103677 c:\users\fierralin\code\sigreader\sgftree.h
 	<stdio.h>
 	<stdarg.h>
 	"sgf_properties.h"
 
-1469963547 c:\users\fierralin\code\sigreader\sgf_properties.h
+1470032984 c:\users\fierralin\code\sigreader\sgf_properties.h
 
 1470017823 source:c:\users\fierralin\code\sigreader\sgfgen.cpp
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1470018726 source:c:\users\fierralin\code\sigreader\sgfnode.cpp
+1470043621 source:c:\users\fierralin\code\sigreader\sgfnode.cpp
 	<config.h>
 	<stdio.h>
 	<stdlib.h>
@@ -45,9 +45,8 @@
 	<winsock.h>
 	<io.h>
 
-1470012379 source:c:\users\fierralin\code\sigreader\sgftree.cpp
+1470020678 source:c:\users\fierralin\code\sigreader\sgftree.cpp
 	<assert.h>
-	"gg_utils.h"
 	"sgftree.h"
 
 1470016869 source:c:\users\fierralin\code\sigreader\gg_utils.cpp
@@ -64,4 +63,15 @@
 	<sys/times.h>
 	<windows.h>
 	<crtdbg.h>
+
+1470104047 source:c:\users\fierralin\code\sigreader\sgfmerge.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"sgftree.h"
+
+1470109866 source:c:\users\fierralin\code\sigreader\main.cpp
+	"sgftree.h"
+	"sgf_properties.h"
 

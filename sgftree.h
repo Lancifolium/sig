@@ -146,4 +146,14 @@ int find_move(SGFNode *node);
 
 
 
+
+
+/* ================================================================ */
+/*                     Some test functions.                         */
+/* ================================================================ */
+
+int printSGFPRO(SGFProperty *pro);
+int printSGFNode(SGFNode *node);
+int printSGF(SGFTree *tree);
+
 #endif

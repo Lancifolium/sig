@@ -6,18 +6,15 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-
 			<Target title="Debug">
 				<Option output="bin/Debug" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="josekii.sgf form.SGF" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 			</Target>
-
 			<Target title="Release">
 				<Option output="bin/Release" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
@@ -30,14 +27,18 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
-
 		</Build>
-
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-
+		<Unit filename="main.cpp" />
+		<Unit filename="sgf_properties.h" />
+		<Unit filename="sgf_utils.cpp" />
+		<Unit filename="sgfmerge.cpp" />
+		<Unit filename="sgfnode.cpp" />
+		<Unit filename="sgftree.cpp" />
+		<Unit filename="sgftree.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
