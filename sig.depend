@@ -1,0 +1,118 @@
+# depslib dependency file v1.0
+1469963998 source:c:\users\fierralin\code\sigreader\sgf_utils.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<ctype.h>
+	"sgftree.h"
+
+1470018726 c:\users\fierralin\code\sigreader\sgftree.h
+	<stdio.h>
+	<stdarg.h>
+	"sgf_properties.h"
+
+1469963547 c:\users\fierralin\code\sigreader\sgf_properties.h
+
+1470017823 source:c:\users\fierralin\code\sigreader\sgfgen.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1470018726 source:c:\users\fierralin\code\sigreader\sgfnode.cpp
+	<config.h>
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<assert.h>
+	<sys/time.h>
+	<time.h>
+	<sys/time.h>
+	<time.h>
+	"sgftree.h"
+
+1470016838 c:\users\fierralin\code\sigreader\gg_utils.h
+	<stdarg.h>
+	<config.h>
+	<sys/time.h>
+	<time.h>
+	<sys/time.h>
+	<time.h>
+	<windows.h>
+	<winsock.h>
+	<io.h>
+	<winsock.h>
+	<io.h>
+
+1470012379 source:c:\users\fierralin\code\sigreader\sgftree.cpp
+	<assert.h>
+	"gg_utils.h"
+	"sgftree.h"
+
+1470016869 source:c:\users\fierralin\code\sigreader\gg_utils.cpp
+	<stdio.h>
+	<stdarg.h>
+	<assert.h>
+	"gg_utils.h"
+	<glib.h>
+	<curses.h>
+	<ncurses/curses.h>
+	<term.h>
+	<ncurses/term.h>
+	<unistd.h>
+	<sys/times.h>
+	<windows.h>
+	<crtdbg.h>
+
+1470061286 source:d:\code\sig\sgfmerge.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+
+1470061286 source:d:\code\sig\sgfnode.cpp
+	<config.h>
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<assert.h>
+	<sys/time.h>
+	<time.h>
+	<sys/time.h>
+	<time.h>
+	"sgftree.h"
+
+1470061286 d:\code\sig\sgftree.h
+	<stdio.h>
+	<stdarg.h>
+	"sgf_properties.h"
+
+1470061286 d:\code\sig\sgf_properties.h
+
+1470061286 source:d:\code\sig\sgftree.cpp
+	<assert.h>
+	"sgftree.h"
+
+1470061286 source:d:\code\sig\sgf_utils.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<ctype.h>
+	"sgftree.h"
+
+1470926908 source:d:\code\sig\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<unistd.h>
+	<io.h>
+	<sys/time.h>
+	<time.h>
+	<sys/time.h>
+	<time.h>
+	"sgftree.h"
+
