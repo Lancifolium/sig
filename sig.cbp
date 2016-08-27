@@ -36,8 +36,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="sgf_properties.h" />
 		<Unit filename="sgf_utils.cpp" />
-		<Unit filename="sgfmerge.cpp" />
 		<Unit filename="sgfnode.cpp" />
+		<Unit filename="sgfoperation.cpp" />
 		<Unit filename="sgftree.cpp" />
 		<Unit filename="sgftree.h" />
 		<Extensions>
