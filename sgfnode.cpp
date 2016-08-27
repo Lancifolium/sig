@@ -1391,7 +1391,7 @@ sgfPrintCommentProperty(FILE *file, SGFNode *node, const char *name)
 }
 
 
-static void
+void
 unparse_node(FILE *file, SGFNode *node)
 {
   sgf_putc(';', file);
@@ -1403,7 +1403,7 @@ unparse_node(FILE *file, SGFNode *node)
 }
 
 
-static void
+void
 unparse_root(FILE *file, SGFNode *node)
 {
   sgf_putc(';', file);
@@ -1479,7 +1479,7 @@ unparse_game(FILE *file, SGFNode *node, int root)
  * function removes this mark so that we can print the property next
  * time too. It recurses to all properties in the linked list.
  */
-static void
+void
 restore_property(SGFProperty *prop)
 {
   if (prop) {

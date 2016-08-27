@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1469963998 source:c:\users\fierralin\code\sigreader\sgf_utils.cpp
+1471222177 source:c:\users\fierralin\code\sigreader\sgf_utils.cpp
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -7,19 +7,19 @@
 	<ctype.h>
 	"sgftree.h"
 
-1470018726 c:\users\fierralin\code\sigreader\sgftree.h
+1472304631 c:\users\fierralin\code\sigreader\sgftree.h
 	<stdio.h>
 	<stdarg.h>
 	"sgf_properties.h"
 
-1469963547 c:\users\fierralin\code\sigreader\sgf_properties.h
+1471222177 c:\users\fierralin\code\sigreader\sgf_properties.h
 
 1470017823 source:c:\users\fierralin\code\sigreader\sgfgen.cpp
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1470018726 source:c:\users\fierralin\code\sigreader\sgfnode.cpp
+1472304572 source:c:\users\fierralin\code\sigreader\sgfnode.cpp
 	<config.h>
 	<stdio.h>
 	<stdlib.h>
@@ -45,9 +45,8 @@
 	<winsock.h>
 	<io.h>
 
-1470012379 source:c:\users\fierralin\code\sigreader\sgftree.cpp
+1472299853 source:c:\users\fierralin\code\sigreader\sgftree.cpp
 	<assert.h>
-	"gg_utils.h"
 	"sgftree.h"
 
 1470016869 source:c:\users\fierralin\code\sigreader\gg_utils.cpp
@@ -114,5 +113,26 @@
 	<time.h>
 	<sys/time.h>
 	<time.h>
+	"sgftree.h"
+
+1472304374 source:c:\users\fierralin\code\sigreader\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<unistd.h>
+	<io.h>
+	<sys/time.h>
+	<time.h>
+	<sys/time.h>
+	<time.h>
+	"sgftree.h"
+
+1472304937 source:c:\users\fierralin\code\sigreader\sgfmerge.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<stack>
 	"sgftree.h"
 

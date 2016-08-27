@@ -316,6 +316,10 @@ void printNode(SGFNode *node) {
 }
 
 void printSGF(SGFTree *tree) {
+  if (tree->root == NULL) { // empty tree
+    fprintf(stderr, "No tree..\n");
+    return;
+  }
 	fprintf(stderr, "root[%p], lastnode[%p]\n"
 					"SGFTREE:\n", tree->root, tree->lastnode);
 	printNode(tree->root);

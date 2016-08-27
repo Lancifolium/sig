@@ -7,8 +7,8 @@ SOURCES += \
     sgf_utils.cpp \
     sgfnode.cpp \
     sgftree.cpp \
-    sgfmerge.cpp \
-    main.cpp
+    main.cpp \
+    sgfoperation.cpp
 
 HEADERS += \
     sgf_properties.h \

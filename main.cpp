@@ -41,6 +41,8 @@ main(int argc, char *argv[])
   //writesgf(sgftree.root, "last.sgf");
   //sgftree.root->child;
 
+  split_sgffile(&sgftree, "szp");
+
 
   sgfFreeNode(sgftree.root);
 
