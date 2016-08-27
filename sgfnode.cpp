@@ -291,7 +291,7 @@ sgfOverwritePropertyInt(SGFNode *node, const char *name, int val)
       prop->value = (char *)xrealloc(prop->value, 12);
       gg_snprintf(prop->value, 12, "%d", val);
       return;
-   }
+	}
 
   sgfAddPropertyInt(node, name, val);
 }

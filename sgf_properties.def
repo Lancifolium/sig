@@ -9,8 +9,8 @@
 # This is an alphabetical index to all properties defined in FF[4].
 # New properties are marked with '*', changed properties are marked with '!'.
 #
-#ID   Description     property type    property value
-#---- --------------- ---------------  --------------------------------------
+#ID  Description     property type    property value
+#--- --------------- ---------------  --------------------------------------
 AB   Add Black       setup            list of stone
 AE   Add Empty       setup            list of point
 AN   Annotation      game-info        simpletext

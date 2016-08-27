@@ -149,5 +149,6 @@ void printSGF(SGFTree *tree);
 /* ---------------------------------------------------------------- */
 
 int merge_two_sgffiles(SGFTree *destree, SGFTree *srctree);
+int split_sgffile(SGFTree *tree, const char *filename);
 
 #endif
