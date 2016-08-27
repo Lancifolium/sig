@@ -291,7 +291,7 @@ sgfOverwritePropertyInt(SGFNode *node, const char *name, int val)
       prop->value = (char *)xrealloc(prop->value, 12);
       gg_snprintf(prop->value, 12, "%d", val);
       return;
-   }
+	}
 
   sgfAddPropertyInt(node, name, val);
 }
@@ -887,7 +887,7 @@ sgf_write_header(SGFNode *root, int overwrite, int seed, float komi,
 
 static void parse_error(const char *msg, int arg);
 static void nexttoken(void);
-static void match(int expected);
+static int match(int expected);
 
 
 static FILE *sgffile;
@@ -928,13 +928,20 @@ nexttoken()
 }
 
 
-static void
+static int
 match(int expected)
 {
-  if (lookahead != expected)
-    parse_error("expected: %c", expected);
+  if (lookahead != expected) {
+    //show_sgf_tree()
+    //parse_error("expected: %c", expected);
+    // here for stoneBase, the empty node is only empty pair () without anything inside, so here
+    // we should consider not only (;) but also () for StoneBase.
+    fprintf(stderr, "expected: %c", expected); // for case ()
+    return 1;
+  }
   else
     nexttoken();
+  return 0;
 }
 
 /* ---------------------------------------------------------------- */
@@ -970,14 +977,14 @@ propvalue(char *buffer, int size)
       lookahead = sgf_getch();
       /* Follow the FF4 definition of backslash */
       if (lookahead == '\r') {
-	lookahead = sgf_getch();
-	if (lookahead == '\n')
-	  lookahead = sgf_getch();
+        lookahead = sgf_getch();
+        if (lookahead == '\n')
+          lookahead = sgf_getch();
       }
       else if (lookahead == '\n') {
-	lookahead = sgf_getch();
-	if (lookahead == '\r')
-	  lookahead = sgf_getch();
+        lookahead = sgf_getch();
+        if (lookahead == '\r')
+          lookahead = sgf_getch();
       }
     }
     if (size > 1) {
@@ -1020,6 +1027,7 @@ static void
 node(SGFNode *n)
 {
   SGFProperty *last = NULL;
+  //show_sgf_tree(n); //////////////////
   match(';');
   while (lookahead != EOF && isupper(lookahead))
     last = property(n, last);

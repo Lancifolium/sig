@@ -289,3 +289,34 @@ sgftreeSetLastNode(SGFTree *tree, SGFNode *last_node) {
  * c-basic-offset: 2
  * End:
  */
+
+// add some functions
+
+void printSGFPRO(SGFProperty *pro) {
+	SGFProperty *tmpnode;
+	tmpnode = pro;
+	while (tmpnode != NULL) {
+		fprintf(stderr, "[%d|%s]", tmpnode->name, tmpnode->value);
+		tmpnode = tmpnode->next;
+	}
+}
+
+void printNode(SGFNode *node) {
+	 fprintf(stderr, "[%p]NodeProp: ", node);
+   printSGFPRO(node->props);
+   //show_sgf_properties(node);
+	 if (node->child != NULL) {
+		 fprintf(stderr, "\nChild:");
+		 printNode(node->child);
+	 }
+	 if (node->next != NULL) {
+		 fprintf(stderr, "\nNext:");
+		 printNode(node->next);
+	 }
+}
+
+void printSGF(SGFTree *tree) {
+	fprintf(stderr, "root[%p], lastnode[%p]\n"
+					"SGFTREE:\n", tree->root, tree->lastnode);
+	printNode(tree->root);
+}

@@ -13,3 +13,7 @@ SOURCES += \
 HEADERS += \
     sgf_properties.h \
     sgftree.h
+
+DISTFILES += \
+    sgf_extras.def \
+    sgf_properties.def

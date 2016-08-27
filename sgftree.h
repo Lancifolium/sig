@@ -140,20 +140,15 @@ int is_move_node(SGFNode *node);
 int is_pass_node(SGFNode *node, int boardsize);
 int find_move(SGFNode *node);
 
+void printSGFPRO(SGFProperty *pro);
+void printNode(SGFNode *node);
+void printSGF(SGFTree *tree);
+
 /* ---------------------------------------------------------------- */
 /* ---                         SGFMerge                         --- */
 /* ---------------------------------------------------------------- */
 
-
-
-
-
-/* ================================================================ */
-/*                     Some test functions.                         */
-/* ================================================================ */
-
-int printSGFPRO(SGFProperty *pro);
-int printSGFNode(SGFNode *node);
-int printSGF(SGFTree *tree);
+int merge_two_sgffiles(SGFTree *destree, SGFTree *srctree);
+int split_sgffile(SGFTree *tree, const char *filename);
 
 #endif
