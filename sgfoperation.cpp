@@ -11,7 +11,6 @@ int write_sgfbranch(char *filename, SGFNode *branch);
 
 
 int merge_two_sgffiles(SGFTree *destree, SGFTree *srctree) {
-  //destree->root->
 
 }
 
@@ -24,9 +23,6 @@ int write_sgfbranch(char *filename, SGFNode *branch) {
   }
 
   FILE *wrl = fopen(filename, "w");
-
-  //fprintf(wrl, "(;GM[1]AP[StoneBase:SGFParser.3.0.1]SZ[19]CA[gb2312]HA[0]");
-
   if (brsave.empty()) return 1; // empty tree
 
   fprintf(wrl, "(");
@@ -43,9 +39,8 @@ int write_sgfbranch(char *filename, SGFNode *branch) {
 }
 
 int split_sgffile(SGFTree *tree, const char *filename) {
-  char __filename[256];
-  int __filenum = 0;
-  //sprintf(__filename, "%s%d.sgf", 10);
+  char namebuff[256];
+  int namenum = 0;
   SGFNode *current;
   current = tree->root;
   std::stack<SGFNode *> iterstk;
@@ -55,23 +50,16 @@ int split_sgffile(SGFTree *tree, const char *filename) {
     current = iterstk.top();
     iterstk.pop();
 
-    /*
-    while (current->child != NULL) {
-      if (current->next != NULL) iterstk.push(current->next);
-      current = current->child;
-    }
-    if (current->next != NULL) iterstk.push(current->next);
-    //*/
-
     while (current != NULL) {
-      if (current->next != NULL) iterstk.push(current->next);
+      if (current->next != NULL)
+        iterstk.push(current->next);
       if (current->child == NULL) {
-        sprintf(__filename, "%s_%d.sgf", filename, __filenum++);
-        if (__filenum < 800)
-        write_sgfbranch(__filename, current);
+        sprintf(namebuff, "%s_%d.sgf", filename, namenum++);
+        //if (namenum < 800)
+        write_sgfbranch(namebuff, current);
       }
       current = current->child;
-    }
-  }
+    } // end current != NULL
+  } // end iteration stack
 
 }
