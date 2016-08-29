@@ -1,3 +1,7 @@
-### SIG resolver
+## SIG resolver
 
-From gnugo. 
+SGF definition and functions are from gnugo. 
+
+# Splite sgf file
+
+Splite branches of sgf tree into several files. 
