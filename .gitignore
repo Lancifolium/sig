@@ -1,0 +1,5 @@
+*.user
+*.mk
+sig.txt
+Debug
+release

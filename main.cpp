@@ -3,11 +3,16 @@
 #include <string.h>
 #include <ctype.h>
 
+#include <unistd.h>
+#include <getopt.h>
+
+#include <stdarg.h>
+
 #ifdef HAVE_UNISTD_H
 /* For isatty(). */
 #include <unistd.h>
 #else
-//#include <io.h>
+#include <io.h>
 #endif
 
 #if TIME_WITH_SYS_TIME
@@ -23,28 +28,65 @@
 
 #include "sgftree.h"
 
+void
+print_help_info() {
+  printf("Usages: ./run \n"
+         "\t-h, --help    print this help info \n"
+         "\t-m, --merge   merge two sgf files \n");
+}
+
+char
+option_choice(const char *arg) {
+  if (arg[0] == '-') {
+    return arg[1];
+  }
+  else return 0;
+}
+
 int
 main(int argc, char *argv[])
 {
   SGFTree sgftree;
+  char **val;
+  val = (char **)malloc(sizeof(char *));
+  char aaa[] = "kjflsjf";
+  switch (option_choice(argv[1])) {
+  case 'h':
+    print_help_info();
+    break;
+  case 's':
+    if (argc < 2) {
+      printf("No sgf file! \n");
+      exit(-1);
+    }
+    sgftree_clear(&sgftree);
+    sgftree_readfile(&sgftree, argv[2]);
+    //printSGF(&sgftree);
+    if (argc >= 3) split_sgffile(&sgftree, argv[3]);
+    else split_sgffile(&sgftree, "sgf");
+    sgfFreeNode(sgftree.root);
+    break;
+  case 'm':
+    if (argc < 3) {
+      printf("No 2 sgf files! \n");
+      exit(-1);
+    }
+    break;
+  case 't':
+    sgftree_clear(&sgftree);
+    sgftree_readfile(&sgftree, argv[2]);
 
-  //char *infilename = "form.SGF";
-  fprintf(stderr, "%d %s\n", argc, argv[1]); ////////////
-  char *infilename = argv[1];
-  //char *infilename = "tmp.sgf";
 
-  sgftree_clear(&sgftree);
-
-  sgftree_readfile(&sgftree, infilename);
-  printSGF(&sgftree);
-  //show_sgf_tree(sgftree.root);
-  //writesgf(sgftree.root, "last.sgf");
-  //sgftree.root->child;
-
-  split_sgffile(&sgftree, "szp");
-
-
-  sgfFreeNode(sgftree.root);
+    *val = aaa;
+    printf("-------------%s\n", *val);
+    if (sgfGetCharProperty(sgftree.root, "AB", val))
+      printf("%s\n", *val);
+    show_sgf_properties(sgftree.root);
+    sgfFreeNode(sgftree.root);
+    break;
+  default:
+    break;
+  }
 
   return 0;
 }  /* end main */

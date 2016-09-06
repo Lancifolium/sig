@@ -143,12 +143,13 @@ int is_move_node(SGFNode *node);
 int is_pass_node(SGFNode *node, int boardsize);
 int find_move(SGFNode *node);
 
+// some print functions
 void printSGFPRO(SGFProperty *pro);
 void printNode(SGFNode *node);
 void printSGF(SGFTree *tree);
 
 /* ---------------------------------------------------------------- */
-/* ---                         SGFMerge                         --- */
+/* ---                      SGF operations                      --- */
 /* ---------------------------------------------------------------- */
 
 int merge_two_sgffiles(SGFTree *destree, SGFTree *srctree);
