@@ -7,7 +7,7 @@
 /* For isatty(). */
 #include <unistd.h>
 #else
-#include <io.h>
+//#include <io.h>
 #endif
 
 #if TIME_WITH_SYS_TIME
